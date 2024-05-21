@@ -21,7 +21,7 @@ make_install() {
         local src_dir=$1
         cd $src_dir || exit 1
         make
-        sudo make install
+        make install
 }
 
 ### The actual script ###
