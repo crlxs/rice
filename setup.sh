@@ -46,3 +46,5 @@ done
 chsh -s $(which zsh)
 cp /etc/zsh/newuser.zshrc.recommended $USER_HOME/.zshrc
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> $USER_HOME/.zshrc
+
+echo "Initial setup complete. Create a ~/.xinitrc file and launch dwm with startx."
