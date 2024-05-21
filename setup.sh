@@ -5,6 +5,8 @@
 dwm_dependencies="xorg xserver-xorg build-essential libx11-dev libxft-dev libxinerama-dev"
 my_packages="curl git zsh neovim chromium compton fonts-noto-color-emoji nmap net-tools"
 
+USER_HOME=$(eval echo ~${SUDO_USER:-$USER})
+
 ### Functions ###
 git_setup () {
 	git config --global user.name "crlxs"
@@ -27,10 +29,12 @@ make_install() {
 sudo apt update && sudo apt upgrade -y && sudo apt install -y $dwm_dependencies $my_packages
 
 # Create ~/ directories
-mkdir -p ~/.config ~/.local/src ~/.local/share ~/.local/bin
+mkdir -p $USER_HOME/.config $USER_HOME/.local/src $USER_HOME/.local/share $USER_HOME/.local/bin
 
 # Clone my forks of dwm, dmenu and st
-git clone https://github.com/crlxs/dwm.git ~/.local/src/dwm
+git clone https://github.com/crlxs/dwm $USER_HOME/.local/src/dwm
+git clone https://github.com/crlxs/dmenu $USER_HOME/.local/src/dmenu
+git clone https://github.com/crlxs/st $USER_HOME/.local/src/st
 
 # Make and install each suckless software
 for dir in "${suckless_dirs[@]}"; do
@@ -39,5 +43,5 @@ done
 
 # Change default shell to zsh, copy basic .zshrc and add path for ~/.local/bin
 chsh -s $(which zsh)
-cp /etc/zsh/newuser.zshrc.recommended $HOME/.zshrc
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> $HOME/.zshrc
+cp /etc/zsh/newuser.zshrc.recommended $USER_HOME/.zshrc
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> $USER_HOME/.zshrc
