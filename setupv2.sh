@@ -20,7 +20,7 @@ git_setup () {
 	git config --global user.email "belmontecarles@gmail.com"
 	
 	ssh-keygen -t rsa -C "belmontecarles@gmail.com"
-	echo ~/.ssh/id_rsa.pub
+	cat ~/.ssh/id_rsa.pub
 }
 
 make_install() {
