@@ -65,7 +65,7 @@ chsh -s $(which zsh)
 git_setup
 
 # clone your dotfiles repo
-git clone --bare git@github.com:crlxs/dotfilestest $HOME/.dotfiles
+git clone --bare git@github.com:crlxs/dotfiles $HOME/.dotfiles
 
 # Define alias for current shell
 #alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
