@@ -2,7 +2,7 @@
 
 ### Options and variables ###
 
-dwm_dependencies="xorg xserver-xorg build-essential libx11-dev libxft-dev libxinerama-dev"
+dwm_dependencies="xorg xserver-xorg dbus-x11 build-essential libx11-dev libxft-dev libxinerama-dev"
 my_packages="curl git zsh neovim chromium compton fonts-noto-color-emoji nmap net-tools"
 
 USER_HOME=$(eval echo ~${SUDO_USER:-$USER})
