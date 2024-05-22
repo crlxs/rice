@@ -21,7 +21,7 @@ git_setup () {
 	git config --global user.email "belmontecarles@gmail.com"
 	
 	ssh-keygen -t rsa -C "belmontecarles@gmail.com"
-	cat ~/.ssh/id_rsa.pub
+	echo ~/.ssh/id_rsa.pub
 }
 
 make_install() {
@@ -49,11 +49,27 @@ for dir in "${suckless_dirs[@]}"; do
 	make_install "$dir"
 done
 
+# Change default shell to zsh
+chsh -s $(which zsh)
+
 # Setup git ssh
 git_setup
 
-# Clone dotfiles bare repo
-git clone --bare git@github.com:crlxs/dotfiles $USER_HOME/.dotfiles
+# clone your dotfiles repo
+git clone --bare git@github.com:crlxs/dotfilestest $HOME/.dotfiles
 
-# Set upstream?
-/usr/bin/git --git-dir=$USER_HOME/.dotfiles/ --work-tree=$HOME --SET-UPSTREAM I FORGOT THE FLAG
+# Define alias for current shell
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# Checkout the actual contet from the bare git repo into $HOME
+dotfiles checkout
+# If any error appear regarding untracked files, delete them.
+
+# Set the flag showUntrackedFiles to no on this specific (local) repository:
+dotfiles config --local status.showUntrackedFiles no
+
+# Set upstream
+dotfiles push --set-upstream origin master
+
+# Rm old files in ~/
+rm $HOME/.bash* $HOME/.profile
