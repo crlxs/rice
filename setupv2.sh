@@ -1,8 +1,7 @@
-1. Run setup.sh
-2. Configure git with ssh (https://kbroman.org/github_tutorial/pages/first_time.html). Prompt user
-to add key to github.com
-3. Clone dotfiles repo. (https://www.atlassian.com/git/tutorials/dotfiles)
-4. Set upstream for repo.
+#1. Run setup.sh
+#2. Configure git with ssh (https://kbroman.org/github_tutorial/pages/first_time.html). Prompt user to add key to github.com
+#3. Clone dotfiles repo. (https://www.atlassian.com/git/tutorials/dotfiles)
+#4. Set upstream for repo.
 
 
 #!/bin/bash
