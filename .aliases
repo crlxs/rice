@@ -1,8 +1,0 @@
-#!/bin/bash
-
-# File with all my aliases, for ease of use/mangement, centralize everything :)
-
-
-# List all files colorized in long format
-
-alias l="ls -lhaF ${colorflag}"
