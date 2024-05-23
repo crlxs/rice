@@ -11,9 +11,9 @@ suckless_dirs=($USER_HOME/.local/src/dwm $USER_HOME/.local/src/dmenu $USER_HOME/
 ### Functions ###
 git_setup () {
         git config --global user.name "crlxs"
-        git config --global user.email "belmontecarles@gmail.com"
+        git config --global user.email "140880473+crlxs@users.noreply.github.com"
 
-        ssh-keygen -t rsa -C "belmontecarles@gmail.com"
+        ssh-keygen -t rsa -C "140880473+crlxs@users.noreply.github.com"
         cat ~/.ssh/id_rsa.pub
 		# Warning
 		echo -e "\033[0;31mADD THE SSH KEY TO GITHUB.COM BEFORE PROCEDING\033[0m"
