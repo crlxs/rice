@@ -43,6 +43,11 @@ dotfilesinstall () {
 	done
 }
 
+git_ssh () {
+	git config --global user.name "crlxs"
+	git config --global user.email "140880473+crlxs@users.noreply.github.com."
+}
+
 
 ### The actual script ###
 
