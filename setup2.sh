@@ -22,8 +22,8 @@ choices () {
 	echo -e "\e[32mDo you want to install the full environment(wm + dotfiles) or just the dotfiles?\e[0m"
 	select choice in "Full" "Dotfiles" "Exit"; do
 		case $choice in
-			Full ) echo "You selected full"; fullinstall; break;;
-			Dotfiles ) echo "You selected Dotfiles"; dotfilesinstall; break;;
+			Full ) echo -e "You selected full\n"; fullinstall; break;;
+			Dotfiles ) echo -e "You selected Dotfiles\n"; dotfilesinstall; break;;
 			Exit ) exit;;
 		esac
 	done
@@ -37,8 +37,8 @@ dotfilesinstall () {
 	echo -e "\e[32mDo you want to just clone the dotfiles or init the repository (requires setting up git)?\e[0m"
 	select choice in "Clone" "Init" "Exit"; do
 		case $choice in
-			Clone ) echo "You selected clone"; break;;
-			Init ) echo "You selected init"; break;;
+			Clone ) echo -e "You selected clone\n"; break;;
+			Init ) echo -e "You selected init\n"; break;;
 			Exit) exit;;
 		esac
 	done
