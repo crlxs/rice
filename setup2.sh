@@ -18,7 +18,7 @@ welcomemsg () {
 }
 
 choices () {
-	echo -e "\e[32mDo you want to install the full environment(wm + dotfiles) or just the dotfiles?\e[0m"
+	echo -e "\e[32mDo you want to install the full environment(dwm/dmenu/st + dotfiles) or just the dotfiles?\e[0m"
 	select choice in "Full" "Dotfiles" "Exit"; do
 		case $choice in
 			Full ) echo -e "You selected full\n"; fullinstall; break;;
