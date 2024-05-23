@@ -33,8 +33,8 @@ fullinstall () {
 }
 
 dotfilesinstall () {
-	echo -e "\e[32mFull dotfiles setup (requires git config) so you can push changes or simply clone?\e[0m"
-	select choice in "Clone" "Init" "Exit"; do
+	echo -e "\e[32mFull dotfiles setup (configuring git) so you can push changes or simply clone?\e[0m"
+	select choice in "Full" "Clone" "Exit"; do
 		case $choice in
 			Full ) echo -e "You selected full.\n"; break;;
 			Clone ) echo -e "You selected clone.\n"; break;;
