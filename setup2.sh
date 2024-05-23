@@ -46,6 +46,18 @@ dotfilesinstall () {
 git_ssh () {
 	git config --global user.name "crlxs"
 	git config --global user.email "140880473+crlxs@users.noreply.github.com."
+
+	ssh-keygen -t rsa -C "belmontecarles@gmail.com"
+        cat ~/.ssh/id_rsa.pub
+	
+	# Warning
+	echo -e "\033[0;31mADD THE SSH KEY TO GITHUB.COM BEFORE PROCEDING.\n
+	Press any key to continue when done.\033[0m"
+	read -n 1 -s
+	# Continue with the rest of your script
+	echo "Continuing after confirmation."
+	# Verify
+	ssh -T git@github.com
 }
 
 
