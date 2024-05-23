@@ -18,11 +18,11 @@ welcomemsg () {
 }
 
 choices () {
-	echo -e "\e[32mDo you want to install the full environment(dwm/dmenu/st + dotfiles) or just the dotfiles?\e[0m"
+	echo -e "\e[32mInstall full environment(dwm/dmenu/st + dotfiles) or just the dotfiles?\e[0m"
 	select choice in "Full" "Dotfiles" "Exit"; do
 		case $choice in
-			Full ) echo -e "You selected full\n"; fullinstall; break;;
-			Dotfiles ) echo -e "You selected Dotfiles\n"; dotfilesinstall; break;;
+			Full ) echo -e "You selected full.\n"; fullinstall; break;;
+			Dotfiles ) echo -e "You selected Dotfiles.\n"; dotfilesinstall; break;;
 			Exit ) exit;;
 		esac
 	done
@@ -33,11 +33,11 @@ fullinstall () {
 }
 
 dotfilesinstall () {
-	echo -e "\e[32mDo you want to just clone the dotfiles or init the repository (requires setting up git)?\e[0m"
+	echo -e "\e[32mFull dotfiles setup (requires git config) so you can push changes or simply clone?\e[0m"
 	select choice in "Clone" "Init" "Exit"; do
 		case $choice in
-			Clone ) echo -e "You selected clone\n"; break;;
-			Init ) echo -e "You selected init\n"; break;;
+			Full ) echo -e "You selected full.\n"; break;;
+			Clone ) echo -e "You selected clone.\n"; break;;
 			Exit) exit;;
 		esac
 	done
@@ -45,9 +45,9 @@ dotfilesinstall () {
 
 git_ssh () {
 	git config --global user.name "crlxs"
-	git config --global user.email "140880473+crlxs@users.noreply.github.com."
+	git config --global user.email "140880473+crlxs@users.noreply.github.com"
 
-	ssh-keygen -t rsa -C "belmontecarles@gmail.com"
+	ssh-keygen -t rsa -C "140880473+crlxs@users.noreply.github.com"
         cat ~/.ssh/id_rsa.pub
 	
 	# Warning
