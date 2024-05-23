@@ -12,6 +12,7 @@ suckless_dirs=($USER_HOME/.local/src/dwm $USER_HOME/.local/src/dmenu $USER_HOME/
 
 ### Functions ###
 
+# Welcome message (May use whiptail in the future, the typical grey with bluebackground dialog box/menu)
 welcomemsg () {
 	echo -e "\n\e[32mHello! This script will automatically install my custom Linux desktop environment + my dotfiles.\nYou can also choose to only install the dotfiles for purely shell environments.\e[0m\n"
 
@@ -39,7 +40,6 @@ dotfilesinstall () {
 
 ### The actual script ###
 
-# Welcome message (May use whiptail in the future, the typical grey with bluebackground dialog box/menu)
 welcomemsg || error "User exited."
 
 choices || error "User exited."
