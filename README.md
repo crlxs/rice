@@ -4,33 +4,43 @@ This repo contains a bootstraping script that sets up my environemnt from scratc
 ## To do:
 - Modularize
 
-
 # Shortcuts
 
 ## Basic
 
-- Spawn new terminal: Mod + Shift + Enter
-- Kill selected window: Mod + Shift + c
-- Open dmenu: Mod + p
-- Hide/Show bar: Mob + b
-- Exit dwm: Mod + Shift + q
-- Fullscreen selected window: Mod + Shift + f
+MODKEY = WindowsKey
+
+- Spawn new terminal: MODKEY + Shift + Enter
+- Kill selected window: MODKEY + Shift + c
+- Open dmenu: MODKEY + p
+- Hide/Show bar: MODKEY + b
+- Exit dwm: MODKEY + Shift + q
+- Fullscreen selected window: MODKEY + Shift + f
 
 ## Layouts
 
-- Tile layout ([]=): Mod + t
-- No layout (><>): Mod + f
-- Monocle layout ([M]): Mod + m
+- Tile layout ([]=): MODKEY + t
+- No layout (><>): MODKEY + f
+- Monocle layout ([M]): MODKEY + m
 
 ## Gaps
 
-- Increase gaps: Mod + (+)
-- Decrease gaps: Mod + (-)
+- Increase gaps: MODKEY + (+)
+- Decrease gaps: MODKEY + (-)
 
 ## Opacity
 
-- Increase focused opacity: Mod + Shift + z
-- Decrease focused opacity: Mod + Shift + x
+- Increase focused opacity: MODKEY + Shift + z
+- Decrease focused opacity: MODKEY + Shift + x
 
-- Increase unfocused opacity: Mod + Shift + a
-- Decrease unfocused opacity: Mod + Shift + s
+- Increase unfocused opacity: MODKEY + Shift + a
+- Decrease unfocused opacity: MODKEY + Shift + s
+
+## Terminal (st) specific
+
+TERMMOD = Control + Shift
+
+- Zoom in: TERMMOD + PgUp
+- Zoom out: TERMMOD + PgDown
+
+- 
