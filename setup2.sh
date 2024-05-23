@@ -29,7 +29,7 @@ choices () {
 }
 
 fullinstall () {
-	echo "This is the fullinstall function."
+	echo -e "This is the fullinstall function.\n"
 }
 
 dotfilesinstall () {
