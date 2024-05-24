@@ -3,7 +3,7 @@
 ### Options and variables ###
 
 dwm_dependencies="xorg xserver-xorg dbus-x11 build-essential libx11-dev libxft-dev libxinerama-dev"
-my_packages="curl ripgrep git zsh chromium compton feh fonts-noto-color-emoji nmap net-tools"
+my_packages="curl ripgrep unzip git zsh chromium compton feh fonts-noto-color-emoji nmap net-tools"
 
 #NVIM requires v0.10 or > for lazyvim/primeagenlike xperience. Instead of installing through apt which has old versions, I am installing directly from the nvim github, see function nvim_install.
 
