@@ -1,5 +1,6 @@
 # rice
 This repo contains a bootstraping script that sets up my environemnt from scratch on a Debian machine, and clones my dotfiles repo.
+Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https://wiki.archlinux.org/title/XDG_Base_Directory).
 
 ## What I use:
 - Debian stable
