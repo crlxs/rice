@@ -1,6 +1,15 @@
 # rice
 This repo contains a bootstraping script that sets up my environemnt from scratch on a Debian machine, and clones my dotfiles repo.
 
+## What I use:
+- Debian stable
+- Suckless.org software:
+  - dwm
+  - dmenu
+  - st
+- neovim + neovim-lua (github.com/nvim-lua/kickstart)
+- a git bare repo to track my doftiles (github.com/crlxs/dotfiles)
+
 ## To do:
 - Modularize (In Progress)
 - Use ansible-vault for git ssh setup to avoid the pain in the ass that is managing ssh keys.
