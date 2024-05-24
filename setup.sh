@@ -3,7 +3,9 @@
 ### Options and variables ###
 
 dwm_dependencies="xorg xserver-xorg dbus-x11 build-essential libx11-dev libxft-dev libxinerama-dev"
-my_packages="curl ripgrep git zsh neovim chromium compton feh fonts-noto-color-emoji nmap net-tools"
+my_packages="curl ripgrep git zsh chromium compton feh fonts-noto-color-emoji nmap net-tools"
+
+#NVIM requires v0.10 or > for lazyvim/primeagenlike xperience. Instead of installing through apt which has old versions, I am installing directly from the nvim github, see function nvim_install.
 
 USER_HOME=$(eval echo ~${SUDO_USER:-$USER})
 suckless_dirs=($USER_HOME/.local/src/dwm $USER_HOME/.local/src/dmenu $USER_HOME/.local/src/st)
@@ -34,6 +36,13 @@ make_install() {
         make install
 }
 
+nvim_intall () {
+	cd $USER_HOME/.local/bin
+	wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+	chmod u+x nvim.appimage
+	mv nvim.appimage nvim
+}
+
 ### The actual script ###
 
 # Update, upgrade and install
@@ -41,6 +50,9 @@ sudo apt update && sudo apt upgrade -y && sudo apt install -y $dwm_dependencies 
 
 # Create ~/ directories, $USER_HOME/.dotfiles is the bare git repo dir.
 mkdir -p $USER_HOME/.dotfiles $USER_HOME/.config $USER_HOME/.local/src $USER_HOME/.local/share $USER_HOME/.local/bin
+
+# nvim install
+nvim_install
 
 # Clone my forks of dwm, dmenu and st
 git clone https://github.com/crlxs/dwm $USER_HOME/.local/src/dwm
