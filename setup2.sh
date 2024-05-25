@@ -44,6 +44,7 @@ dotfilesinstall () {
 }
 
 git_ssh () {
+	# This is bad because it doesn't check if config already exists or not, but should be fine for freshly installed hosts.
 	git config --global user.name "crlxs"
 	git config --global user.email "140880473+crlxs@users.noreply.github.com"
 
