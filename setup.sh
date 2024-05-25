@@ -54,12 +54,11 @@ mkdir -p $USER_HOME/.dotfiles $USER_HOME/.config $USER_HOME/.local/src $USER_HOM
 # nvim install
 nvim_install
 
-# Clone my forks of dwm, dmenu and st
+# Clone my forks of dwm, dmenu and st and install them
 git clone https://github.com/crlxs/dwm $USER_HOME/.local/src/dwm
 git clone https://github.com/crlxs/dmenu $USER_HOME/.local/src/dmenu
 git clone https://github.com/crlxs/st $USER_HOME/.local/src/st
 
-# Make and install each suckless software
 for dir in "${suckless_dirs[@]}"; do
         make_install "$dir"
 done
@@ -70,10 +69,10 @@ chsh -s $(which zsh)
 # Setup git ssh
 git_setup
 
-# clone your dotfiles repo
+# Clone dotfiles repo
 git clone --bare git@github.com:crlxs/dotfiles $HOME/.dotfiles
 
-# Define alias for current shell
+# Define alias for current shell. It exists in .config/shell/aliasrc, leaving this clarity tho.
 #alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Checkout the actual contet from the bare git repo into $HOME
