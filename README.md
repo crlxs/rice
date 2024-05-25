@@ -54,4 +54,5 @@ TERMMOD = Control + Shift
 - Zoom in: TERMMOD + PgUp
 - Zoom out: TERMMOD + PgDown
 
-- 
+- Scrollup: Shift + Pgup
+- Scrolldown: Shift + PgDown
