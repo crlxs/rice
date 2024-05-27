@@ -123,6 +123,9 @@ fullinstall () {
 	# dotfiles bare git repo setup
 	dotfiles_setup
 
+	# nvim_install
+	nvim_install
+
 	# Change default shell to zsh
 	chsh -s $(which zsh)
 
