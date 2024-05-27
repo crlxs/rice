@@ -53,6 +53,13 @@ suckless_install () {
 	git clone https://github.com/crlxs/dmenu $USER_HOME/.local/src/dmenu
 	git clone https://github.com/crlxs/st $USER_HOME/.local/src/st
 
+	make_install() {
+		local src_dir=$1
+		cd $src_dir || exit 1
+		make
+		make install
+	}
+
 	for dir in "${suckless_dirs[@]}"; do
 		make_install "$dir"
 	done
