@@ -112,6 +112,9 @@ fullinstall () {
 
 	# Setup git ssh
 	git_ssh
+	
+	# dotfiles bare git repo setup
+	dotfiles_setup
 
 	# Change default shell to zsh
 	chsh -s $(which zsh)
