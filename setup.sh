@@ -36,7 +36,7 @@ make_install() {
         make install
 }
 
-nvim_intall () {
+nvim_install () {
 	cd $USER_HOME/.local/bin
 	wget https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
 	chmod u+x nvim.appimage
