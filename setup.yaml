@@ -3,7 +3,7 @@
 - hosts: localhost
   become: true
   vars:
-    suckless_dependencies: # Packages required to build dwm/dmenu/st and packages that I will only use with the graphical environment (feh, chromium, etc).
+    suckless_dep: # Packages required to build dwm/dmenu/st and packages that I will only use with the graphical environment (feh, chromium, etc).
       - xorg 
       - xserver-xorg
       - dbus-x11
