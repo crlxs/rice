@@ -58,3 +58,9 @@ TERMMOD = Control + Shift
 
 - Scrollup: Shift + Pgup
 - Scrolldown: Shift + PgDown
+
+## Diagram
+
+Small diagram of the decision tree for the install process, this is not yet fully implemented but its the idea. Either through shell script with the different choices asked or by the use of tags with the ansible playbook.
+
+![Dotfiles diagram](dotfiles.jpg)
