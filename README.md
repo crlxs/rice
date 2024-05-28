@@ -8,16 +8,18 @@ Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https:/
   - dwm
   - dmenu
   - st
-- neovim + neovim-lua (github.com/nvim-lua/kickstart)
+- neovim/lazy vim (work in progress)
 - a git bare repo to track my doftiles (github.com/crlxs/dotfiles)
 
-## To do:
-- Modularize (In Progress)
+## Work in progress:
+- Convert setup.sh into an ansible playbook (setup.yaml).
+
+## To-dos
 - Use ansible-vault for git ssh setup to avoid the pain in the ass that is managing ssh keys.
 
-# Shortcuts
+## Shortcuts
 
-## Basic
+### Basic
 
 MODKEY = WindowsKey
 
@@ -28,18 +30,18 @@ MODKEY = WindowsKey
 - Exit dwm: MODKEY + Shift + q
 - Fullscreen selected window: MODKEY + Shift + f
 
-## Layouts
+### Layouts
 
 - Tile layout ([]=): MODKEY + t
 - No layout (><>): MODKEY + f
 - Monocle layout ([M]): MODKEY + m
 
-## Gaps
+### Gaps
 
 - Increase gaps: MODKEY + (+)
 - Decrease gaps: MODKEY + (-)
 
-## Opacity
+### Opacity
 
 - Increase focused opacity: MODKEY + Shift + z
 - Decrease focused opacity: MODKEY + Shift + x
@@ -47,7 +49,7 @@ MODKEY = WindowsKey
 - Increase unfocused opacity: MODKEY + Shift + a
 - Decrease unfocused opacity: MODKEY + Shift + s
 
-## Terminal (st) specific
+### Terminal (st) specific
 
 TERMMOD = Control + Shift
 
