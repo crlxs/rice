@@ -22,6 +22,7 @@
       - unzip  
       - git
       - zsh
+      - fzf #Fuzzy finder for shell
       - fonts-noto-color-emoji
       - net-tools
       - tcpdump
