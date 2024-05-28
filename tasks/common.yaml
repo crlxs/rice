@@ -1,0 +1,18 @@
+- name: apt update && upgrade
+  tags:
+    - common
+- name: install core packages
+  tags:
+    - common
+- name: create ~/ directories for dotfiles
+  tags:
+    - common
+- name: dotfiles clone, checkout and setup
+  tags:
+    - common
+- name: change default shell to zsh
+  tags:
+    - common
+- name: clean-up ~/
+  tags:
+    - common
