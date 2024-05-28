@@ -23,41 +23,41 @@ Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https:/
 
 MODKEY = WindowsKey
 
-- Spawn new terminal: MODKEY + Shift + Enter
-- Kill selected window: MODKEY + Shift + c
-- Open dmenu: MODKEY + p
-- Hide/Show bar: MODKEY + b
-- Exit dwm: MODKEY + Shift + q
-- Fullscreen selected window: MODKEY + Shift + f
+- **Spawn new terminal**: MODKEY + Shift + Enter
+- **Kill selected window**: MODKEY + Shift + c
+- **Open dmenu**: MODKEY + p
+- **Hide/Show bar**: MODKEY + b
+- **Exit dwm**: MODKEY + Shift + q
+- **Fullscreen selected window**: MODKEY + Shift + f
 
 ### Layouts
 
-- Tile layout ([]=): MODKEY + t
-- No layout (><>): MODKEY + f
-- Monocle layout ([M]): MODKEY + m
+- **Tile layout ([]=)**: MODKEY + t
+- **No layout (><>)**: MODKEY + f
+- **Monocle layout ([M])**: MODKEY + m
 
 ### Gaps
 
-- Increase gaps: MODKEY + (+)
-- Decrease gaps: MODKEY + (-)
+- **Increase gaps**: MODKEY + (+)
+- **Decrease gaps**: MODKEY + (-)
 
 ### Opacity
 
-- Increase focused opacity: MODKEY + Shift + z
-- Decrease focused opacity: MODKEY + Shift + x
+- **Increase focused opacity**: MODKEY + Shift + z
+- **Decrease focused opacity**: MODKEY + Shift + x
 
-- Increase unfocused opacity: MODKEY + Shift + a
-- Decrease unfocused opacity: MODKEY + Shift + s
+- **Increase unfocused opacity**: MODKEY + Shift + a
+- **Decrease unfocused opacity**: MODKEY + Shift + s
 
 ### Terminal (st) specific
 
 TERMMOD = Control + Shift
 
-- Zoom in: TERMMOD + PgUp
-- Zoom out: TERMMOD + PgDown
+- **Zoom in**: TERMMOD + PgUp
+- **Zoom out**: TERMMOD + PgDown
 
-- Scrollup: Shift + Pgup
-- Scrolldown: Shift + PgDown
+- **Scrollup**: Shift + Pgup
+- **Scrolldown**: Shift + PgDown
 
 ## Diagram
 
