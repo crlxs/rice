@@ -1,6 +1,7 @@
 # Ansible playbook to install my custom Linux Desktop environment + dotfiles.
 
 - hosts: localhost
+  become: true
   vars:
     suckless_dependencies: # Packages required to build dwm/dmenu/st and packages that I will only use with the graphical environment (feh, chromium, etc).
       - xorg 
@@ -13,7 +14,8 @@
       - feh
       - xwallpaper
       - compton
-    my_packages: # Packages common to all environments, regardless if they are graphical or not (zsh, git, neovim dependencies [ripgrep, fd-find], etc).
+      - gimp
+    core: # Packages common to all environments, regardless if they are graphical or not (zsh, git, neovim dependencies [ripgrep, fd-find], etc).
       - curl
       - ripgrep
       - fd-find
@@ -21,12 +23,10 @@
       - git
       - zsh
       - fonts-noto-color-emoji
-      - nmap
       - net-tools
-      - curl
       - tcpdump
 
-  tasks:
+  pre_tasks: # Tasks common to all setup options (Full, core+git or just core).
     - name: Determine ~/ of the sudo user or current user
       set_fact:
         user_home: "{{ lookup('env', 'HOME') }}"
@@ -35,3 +35,10 @@
     - name: Print the determined home directory
       debug:
         msg: "The home directory is {{ user_home }}"
+    # Do with include aswell
+
+  tasks: # Tasks per setup options, split through tags.
+    - include: tasks/suckless.yaml
+    - include: tasks/gitssh.yaml
+    - include: tasks/common.yaml
+    # Includes seems way cleaner to manage instead of blocks of tasks.
