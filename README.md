@@ -58,3 +58,12 @@ TERMMOD = Control + Shift
 
 - Scrollup: Shift + Pgup
 - Scrolldown: Shift + PgDown
+
+
+
++--------+ 
+| [Core] | 
+|  zsh   |
+|  git   |
+|  nvim  |
++--------+
