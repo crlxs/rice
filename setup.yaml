@@ -1,3 +1,37 @@
 # Ansible playbook to install my custom Linux Desktop environment + dotfiles.
 
 - hosts: localhost
+  vars:
+    suckless_dependencies: # Packages required to build dwm/dmenu/st and packages that I will only use with the graphical environment (feh, chromium, etc).
+      - xorg 
+      - xserver-xorg
+      - dbus-x11
+      - build-essential
+      - libx11-dev
+      - libxft-dev
+      - libxinerama-dev
+      - feh
+      - xwallpaper
+      - compton
+    my_packages: # Packages common to all environments, regardless if they are graphical or not (zsh, git, neovim dependencies [ripgrep, fd-find], etc).
+      - curl
+      - ripgrep
+      - fd-find
+      - unzip  
+      - git
+      - zsh
+      - fonts-noto-color-emoji
+      - nmap
+      - net-tools
+      - curl
+      - tcpdump
+
+  tasks:
+    - name: Determine ~/ of the sudo user or current user
+      set_fact:
+        user_home: "{{ lookup('env', 'HOME') }}"
+      when: ansible_env.SUDO_USER is not defined
+
+    - name: Print the determined home directory
+      debug:
+        msg: "The home directory is {{ user_home }}"
