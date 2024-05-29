@@ -32,15 +32,15 @@
   git:
     repo: 'https://github.com/crlxs/dotfiles'
     dest: "{{ home }}/.dotfiles"
-    bare: yes
+    bare: true
 
-- name: Checkout dotfiles repo to home directory
+- name: Checkout dotfiles repo
   tags:
     - common
   git:
     repo: "{{ home }}/.dotfiles"
     dest: "{{ home }}"
-    update: yes
+    clone: false
 
 #- name: change default shell to zsh
 #  tags:
