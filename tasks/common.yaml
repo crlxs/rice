@@ -31,7 +31,7 @@
     - common
   git:
     repo: 'https://github.com/crlxs/dotfiles'
-    dest: "{{ home }}/.dofiles"
+    dest: "{{ home }}/.dotfiles"
     bare: yes
 
 - name: Checkout dotfiles repo to home directory
