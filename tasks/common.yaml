@@ -1,42 +1,36 @@
-- name: apt update && upgrade
-  tags:
-    - common
-  become: true
-  apt: 
-    upgrade: yes
-    update_cache: yes
-    cache_valid_time: 3600 # One hour
-    
+#- name: apt update && upgrade
+#  tags:
+#    - common
+#  become: true
+#  apt: 
+#    upgrade: yes
+#    update_cache: yes
+#    cache_valid_time: 3600 # One hour
 
 - name: install core packages
   tags:
     - common
   become: true
   apt:
-    name: "{{ core }}" 
+    name: "{{ core }}"
     state: present
 
 - name: create ~/ directories for dotfiles
   tags:
     - common
   file:
-    path:
-      - "{{ user_home }}"/.dotfiles
-      - "{{ user_home }}"/.config
-      - "{{ user_home }}"/.cache
-      - "{{ user_home }}"/.local/src
-      - "{{ user_home }}"/.local/share
-      - "{{ user_home }}"/.local/bin
+    path: "{{ item }}"
     state: directory
+  loop: "{{ homedirs }}"
 
-- name: dotfiles clone, checkout and setup
-  tags:
-    - common
+#- name: dotfiles clone, checkout and setup
+#  tags:
+#    - common
 
-- name: change default shell to zsh
-  tags:
-    - common
+#- name: change default shell to zsh
+#  tags:
+#    - common
 
-- name: clean-up ~/
-  tags:
-    - common
+#- name: clean-up ~/
+#  tags:
+#    - common
