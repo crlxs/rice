@@ -1,7 +1,6 @@
 # Ansible playbook to install my custom Linux Desktop environment + dotfiles.
 
 - hosts: localhost
-  become: true
   vars:
     suckless_dep: # Packages required to build dwm/dmenu/st and packages that I will only use with the graphical environment (feh, chromium, etc).
       - xorg
