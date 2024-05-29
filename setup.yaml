@@ -26,14 +26,7 @@
       - fonts-noto-color-emoji
       - net-tools
       - tcpdump
-    homedirs: # All directories under ~/ to be created
-      - "{{ user_home }}"/.dotfiles
-      - "{{ user_home }}"/.config
-      - "{{ user_home }}"/.cache
-      - "{{ user_home }}"/.local/src
-      - "{{ user_home }}"/.local/share
-      - "{{ user_home }}"/.local/bin
-
+ 
 
   pre_tasks: # Tasks common to all setup options (Full, core+git or just core).
     - name: Determine ~/ of the sudo user or current user
@@ -48,6 +41,6 @@
 
   tasks: # Tasks per setup options, split through tags.
     - include: tasks/common.yaml
-    - include: tasks/gitssh.yaml
-    - include: tasks/suckless.yaml
+#    - include: tasks/gitssh.yaml
+#    - include: tasks/suckless.yaml
     # Includes seems way cleaner to manage instead of blocks of tasks.

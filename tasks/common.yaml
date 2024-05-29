@@ -20,7 +20,13 @@
   tags:
     - common
   file:
-    path: "{{ homedirs }}"
+    path:
+      - "{{ user_home }}"/.dotfiles
+      - "{{ user_home }}"/.config
+      - "{{ user_home }}"/.cache
+      - "{{ user_home }}"/.local/src
+      - "{{ user_home }}"/.local/share
+      - "{{ user_home }}"/.local/bin
     state: directory
 
 - name: dotfiles clone, checkout and setup
