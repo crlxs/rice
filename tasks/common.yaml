@@ -7,7 +7,8 @@
 #    update_cache: yes
 #    cache_valid_time: 3600 # One hour
 
-- name: install core packages
+
+- name: Install core packages
   tags:
     - common
   become: true
@@ -15,7 +16,8 @@
     name: "{{ core }}"
     state: present
 
-- name: create ~/ directories for dotfiles
+
+- name: Create ~/ directories for dotfiles
   tags:
     - common
   file:
@@ -23,9 +25,22 @@
     state: directory
   loop: "{{ homedirs }}"
 
-#- name: dotfiles clone, checkout and setup
-#  tags:
-#    - common
+
+- name: Clone dotfiles bare repo
+  tags:
+    - common
+  git:
+    repo: 'https://github.com/crlxs/dotfiles'
+    dest: "{{ home }}/.dofiles"
+    bare: yes
+
+- name: Checkout dotfiles repo to home directory
+  tags:
+    - common
+  git:
+    repo: "{{ home }}/.dotfiles"
+    dest: "{{ home }}"
+    update: yes
 
 #- name: change default shell to zsh
 #  tags:
