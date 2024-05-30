@@ -17,12 +17,25 @@
     name: "{{ suckless_dep }}"
     state: present
 
+
 - name: Clone my forks of dwm, dmenu and st
   tags:
     - suckless
   git:
     repo: 'https://github.com/crlxs/{{ item }}'
     dest: "{{ home }}/.local/src/{{ item }}"
+  loop:
+    - dwm
+    - dmenu
+    - st
+
+
+- name: Make install dwm, dmenu and st
+  tags:
+    - suckless
+  make:
+    chdir: "{{ home }}/.local/src/{{ item }}"
+    target: install
   loop:
     - dwm
     - dmenu
