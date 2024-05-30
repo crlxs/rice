@@ -1,0 +1,29 @@
+
+#- name: apt update && upgrade
+#  tags:
+#    - suckless
+#  become: true
+#  apt: 
+#    upgrade: yes
+#    update_cache: yes
+#    cache_valid_time: 3600 # One hour
+
+
+- name: Install core packages
+  tags:
+    - suckless
+  become: true
+  apt:
+    name: "{{ suckless_dep }}"
+    state: present
+
+- name: Clone my forks of dwm, dmenu and st
+  tags:
+    - suckless
+  git:
+    repo: 'https://github.com/crlxs/{{ item }}'
+    dest: "{{ home }}/.{{ item }}"
+  loop:
+    - dwm
+    - dmenu
+    - st
