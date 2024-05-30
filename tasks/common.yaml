@@ -62,13 +62,18 @@
   become: true
   shell: chsh -s $(which zsh)
 
-- name: nvim install
+- name: nvim stable download
   tags:
     - common
   get_url:
     url: "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
     dest: "{{ home }}/.local/bin/nvim.appimage"
     mode: '0755'
+
+- name: rename nvim.appimage to nvim
+  tags:
+    - common
+  shell: mv $HOME/.local/bin/nvim.appimage $HOME/.local/bin/nvim
 
 
 #- name: clean-up ~/
