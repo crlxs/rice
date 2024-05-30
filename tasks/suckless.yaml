@@ -9,7 +9,7 @@
 #    cache_valid_time: 3600 # One hour
 
 
-- name: Install suckless dependencies packages
+- name: Install suckless dependencies
   tags:
     - suckless
   become: true
