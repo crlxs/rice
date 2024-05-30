@@ -22,7 +22,7 @@
     - suckless
   git:
     repo: 'https://github.com/crlxs/{{ item }}'
-    dest: "{{ home }}/.{{ item }}"
+    dest: "{{ home }}/.local/src/{{ item }}"
   loop:
     - dwm
     - dmenu
