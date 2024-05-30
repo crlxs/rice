@@ -34,11 +34,13 @@
     dest: "{{ home }}/.dotfiles"
     bare: true
 
+
 - name: Checkout content into ~/
   tags:
     - common
   shell:
     cmd: git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
+
 
 - name: Define dotfiles alias for current shell
   tags:
@@ -53,10 +55,18 @@
   shell:
     cmd: git --git-dir=$HOME/.dotfiles --work-tree=$HOME config --local status.showUntrackedFiles no
 
+
 - name: change default shell to zsh
   tags:
     - common
   shell: chsh -s $(which zsh)
+
+- name: nvim install
+    get_url:
+      url: "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
+      dest: "{{ home }}/.local/bin/nvim"
+      mode: '0755'
+
 
 #- name: clean-up ~/
 #  tags:
