@@ -34,18 +34,29 @@
     dest: "{{ home }}/.dotfiles"
     bare: true
 
-- name: Checkout dotfiles repo
+- name: Checkout content into ~/
   tags:
     - common
-  git:
-    repo: "{{ home }}/.dotfiles"
-    dest: "{{ home }}"
-    separate_git_dir: "{{ home }}/.dotfiles" 
-    clone: false
+  shell:
+    cmd: git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
 
-#- name: change default shell to zsh
-#  tags:
-#    - common
+- name: Define dotfiles alias for current shell
+  tags:
+    - common
+  shell:
+    cmd: alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tee=$HOME'
+
+
+- name: Set showUntrackedFiles flag to no locally
+  tags:
+    - common
+  shell:
+    cmd: git --git-dir=$HOME/.dotfiles --work-tree=$HOME config --local status.showUntrackedFiles no
+
+- name: change default shell to zsh
+  tags:
+    - common
+  shell: chsh -s $(which zsh)
 
 #- name: clean-up ~/
 #  tags:
