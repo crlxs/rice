@@ -62,9 +62,11 @@
   shell: chsh -s $(which zsh)
 
 - name: nvim install
+  tags:
+    - common
     get_url:
       url: "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
-      dest: "{{ home }}/.local/bin/nvim"
+      dest: "{{ home }}/.local/bin/nvim.appimage"
       mode: '0755'
 
 
