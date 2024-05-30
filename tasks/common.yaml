@@ -61,3 +61,4 @@
 #- name: clean-up ~/
 #  tags:
 #    - common
+# ADD DEBUG MESSAGE TO REMIND DELETION OF OLD DOTFILES IN ~/
