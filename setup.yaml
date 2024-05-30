@@ -29,11 +29,11 @@
     homedirs:
       - "{{ home }}/.dotfiles"
       - "{{ home }}/.config"
-      - "{{ home }}/.cache"
       - "{{ home }}/.local/src"
       - "{{ home }}/.local/share"
       - "{{ home }}/.local/bin"
-
+      - "{{ home }}/.cache"
+      - "{{ home }}/.cache/zsh"
   tasks: # Tasks per setup options, split through tags.
     - include: tasks/common.yaml
 #    - include: tasks/gitssh.yaml
