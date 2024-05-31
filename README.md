@@ -24,6 +24,7 @@ Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https:/
 MODKEY = WindowsKey
 
 - **Spawn new terminal**: MODKEY + Shift + Enter
+- **Spawn new browser**: MODKEY + w
 - **Kill selected window**: MODKEY + Shift + c
 - **Open dmenu**: MODKEY + p
 - **Hide/Show bar**: MODKEY + b
