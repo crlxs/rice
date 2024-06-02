@@ -38,4 +38,4 @@
     - include: tasks/common.yaml
 #    - include: tasks/gitssh.yaml
 #    - include: tasks/suckless.yaml
-    # Includes seems way cleaner to manage instead of blocks of tasks.
+# Includes seems way cleaner to manage instead of blocks of tasks.
