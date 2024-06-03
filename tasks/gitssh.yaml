@@ -1,4 +1,3 @@
-
 #- name: apt update && upgrade
 #  tags:
 #    - common
@@ -21,7 +20,7 @@
   tags:
     - gitssh
   copy:
-    src: "{{ source_key}}"
+    src: "{{ source_key }}"
     dest: "{{ dest_key }}"
 
 
@@ -29,14 +28,16 @@
   tags:
     - gitssh
   copy:
-    src: "{{ source_key}}.pub"
+    src: "{{ source_key }}.pub"
     dest: "{{ dest_key }}.pub"
 
 
-- name: Set authorized key from file
+- name: Set authorized key took from file
   tags:
     - gitssh
   authorized_key:
-    user: "{{lookup('env', 'USER' )}}"
+    user: "{{ lookup('env', 'USER' ) }}"
     state: present
-    key: "{{ home }}/.ssh/id_rsa.pub"
+    key: "{{ lookup('file', item) }}"
+  with_fileglob:
+    - "{{ home }}/.ssh/*.pub"
