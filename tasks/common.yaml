@@ -62,6 +62,7 @@
   become: true
   shell: chsh -s $(which zsh)
 
+
 - name: nvim stable download
   tags:
     - common
@@ -69,6 +70,7 @@
     url: "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
     dest: "{{ home }}/.local/bin/nvim.appimage"
     mode: '0755'
+
 
 - name: rename nvim.appimage to nvim
   tags:
