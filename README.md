@@ -1,5 +1,5 @@
 # rice
-This repo contains a bootstraping script that sets up my environemnt from scratch on a Debian machine, and clones my dotfiles repo.
+This repo contains a bootstraping script that sets up my environment from scratch on a Debian machine, and clones my dotfiles repo.
 Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https://wiki.archlinux.org/title/XDG_Base_Directory).
 
 ## What I use:
@@ -8,14 +8,19 @@ Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https:/
   - dwm
   - dmenu
   - st
-- neovim/lazy vim (work in progress)
-- a git bare repo to track my doftiles (github.com/crlxs/dotfiles)
+- Neovim/lazy vim (work in progress)
+- A git bare repo to track my doftiles (github.com/crlxs/dotfiles)
+- Ansible: for deployment of my environment.
+- Ansible-vault: SSH private key (./ssh/id_rsa) so it can safely be in this repo and reused.
 
 ## Work in progress:
-- Convert setup.sh into an ansible playbook (setup.yaml).
+- Rewrite ansible playbook (setup.yaml) and structure to properly use roles/handlers.
 
 ## To-dos
-- Use ansible-vault for git ssh setup to avoid the pain in the ass that is managing ssh keys.
+- Use ansible-vault for git ssh setup to avoid the pain in the ass that is managing ssh keys. (COMPLETED June 3rd, 2024).
+- Convert setup.sh into an ansible playbook (setup.yaml). (COMPLETED June 3rd, 2024).
+
+---
 
 ## Shortcuts
 
