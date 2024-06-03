@@ -35,7 +35,7 @@
     bare: true
 
 
-- name: Checkout content into ~/
+- name: Checkout content into ~/ # Haven't managed to do it with git module.
   tags:
     - common
   shell:
