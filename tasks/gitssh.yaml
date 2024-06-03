@@ -9,7 +9,26 @@
 #    cache_valid_time: 3600 # One hour
 
 
-- name: Template task
+- name: Ensure ~/.ssh exists
   tags:
-    - ssh
-  become: false
+    - gitssh
+  file:
+    dest: "{{ home }/}/.ssh"
+    state: directory
+
+
+- name: Install ssh key
+  tags:
+    - gitssh
+  copy:
+    src: "{{ source_key}}"
+    dest: "{{ dest_key }}"
+
+
+- name: Set authorized key from file
+  tags:
+    - gitssh
+  authorized_key:
+    user: "{{lookup('env', 'USER' )}}"
+    state: present
+    key: "{{ home }}/.ssh/id_rsa.pub"
