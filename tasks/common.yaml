@@ -56,10 +56,13 @@
     cmd: git --git-dir=$HOME/.dotfiles --work-tree=$HOME config --local status.showUntrackedFiles no
 
 
-- name: change default shell to zsh
+- name: Change default shell to zsh
   tags:
     - common
-  shell: chsh -s $(which zsh)
+  become: true
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh
 
 
 - name: nvim stable download
