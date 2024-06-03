@@ -33,7 +33,7 @@
     dest: "{{ dest_key }}.pub"
 
 
-- name: Set authorized key took from file
+- name: Set authorized key took from file # This authorizes inbound ssh from hosts with this same key pair
   tags:
     - gitssh
   authorized_key:
