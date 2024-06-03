@@ -25,6 +25,14 @@
     dest: "{{ dest_key }}"
 
 
+- name: Install ssh public key
+  tags:
+    - gitssh
+  copy:
+    src: "{{ source_key}}.pub"
+    dest: "{{ dest_key }}.pub"
+
+
 - name: Set authorized key from file
   tags:
     - gitssh
