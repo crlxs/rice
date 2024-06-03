@@ -34,6 +34,8 @@
       - "{{ home }}/.local/bin"
       - "{{ home }}/.cache"
       - "{{ home }}/.cache/zsh"
+    source_key: "./ssh/id_rsa"
+    dest_key: "{{ home }}/.ssh/id_rsa"
   tasks: # Tasks per setup options, split through tags.
     - include: tasks/common.yaml
 #    - include: tasks/gitssh.yaml
