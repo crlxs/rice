@@ -13,7 +13,7 @@
   tags:
     - gitssh
   file:
-    dest: "{{ home }/}/.ssh"
+    dest: "{{ home }}/.ssh"
     state: directory
 
 
