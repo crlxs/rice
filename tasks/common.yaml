@@ -59,7 +59,6 @@
 - name: change default shell to zsh
   tags:
     - common
-  become: true
   shell: chsh -s $(which zsh)
 
 
