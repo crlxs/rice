@@ -37,5 +37,5 @@
   tasks: # Tasks per setup options, split through tags.
     - include: tasks/common.yaml
 #    - include: tasks/gitssh.yaml
-#    - include: tasks/suckless.yaml
+    - include: tasks/suckless.yaml
 # Includes seems way cleaner to manage instead of blocks of tasks.
