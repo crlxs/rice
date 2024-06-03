@@ -2,6 +2,11 @@
 This repo contains a bootstraping script that sets up my environment from scratch on a Debian machine, and clones my dotfiles repo.
 Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https://wiki.archlinux.org/title/XDG_Base_Directory).
 
+You can either:
+- Download and execute the shell script "./setup.sh".
+- Execute the ansible playbook with: 
+> ansible-playbook -t <TAGS> setup.yaml --ask-become-pass --ask-vault-pass
+
 ## What I use:
 - Debian stable
 - Suckless.org software:
@@ -10,11 +15,11 @@ Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https:/
   - st
 - Neovim/lazy vim (work in progress)
 - A git bare repo to track my doftiles (github.com/crlxs/dotfiles)
-- Ansible: for deployment of my environment.
-- Ansible-vault: SSH private key (./ssh/id_rsa) so it can safely be in this repo and reused.
+- Ansible: Environment deployment.
+- Ansible-vault: Encryption of SSH private key (./ssh/id_rsa) so it can safely be in this repo and reused.
 
 ## Work in progress:
-- Rewrite ansible playbook (setup.yaml) and structure to properly use roles/handlers.
+- Rewrite ansible playbook (setup.yaml) and structure to properly use roles/handlers/tags.
 
 ## To-dos
 - Use ansible-vault for git ssh setup to avoid the pain in the ass that is managing ssh keys. (COMPLETED June 3rd, 2024).
