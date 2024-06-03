@@ -1,0 +1,15 @@
+
+#- name: apt update && upgrade
+#  tags:
+#    - common
+#  become: true
+#  apt: 
+#    upgrade: yes
+#    update_cache: yes
+#    cache_valid_time: 3600 # One hour
+
+
+- name: Template task
+  tags:
+    - ssh
+  become: false
