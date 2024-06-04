@@ -23,7 +23,7 @@ You can either:
 
 ## To-dos
 - Ansible handler to clone with ssh instead of https if gitssh task has been setup. With the current tasks (cloning with https and setting up git with ssh), I cant push changes to my dotfiles repos because it fails authentication. I just realized this can be done by simply changing the remote configured in ~/.dotfiles/config.
-
+- zsh/nvim customization
 
 - Use ansible-vault for git ssh setup to avoid the pain in the ass that is managing ssh keys. (COMPLETED June 3rd, 2024).
 - Convert setup.sh into an ansible playbook (setup.yaml). (COMPLETED June 3rd, 2024).
