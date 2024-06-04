@@ -22,7 +22,7 @@ You can either:
 - Rewrite ansible playbook (setup.yaml) and structure to properly use roles/handlers/tags.
 
 ## To-dos
-- Ansible handler to clone with ssh instead of https if gitssh task has been setup. With the current tasks (cloning with https and setting up git with ssh), I cant push changes to my dotfiles repos because it fails authentication.
+- Ansible handler to clone with ssh instead of https if gitssh task has been setup. With the current tasks (cloning with https and setting up git with ssh), I cant push changes to my dotfiles repos because it fails authentication. I just realized this can be done by simply changing the remote configured in ~/.dotfiles/config.
 
 
 - Use ansible-vault for git ssh setup to avoid the pain in the ass that is managing ssh keys. (COMPLETED June 3rd, 2024).
