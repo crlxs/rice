@@ -5,7 +5,7 @@ Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https:/
 You can either:
 - Download and execute the shell script "./setup.sh".
 - Execute the ansible playbook with: 
-> ansible-playbook -t <TAGS> setup.yaml --ask-become-pass --ask-vault-pass
+> ansible-playbook -t TAGS setup.yaml --ask-become-pass --ask-vault-pass
 
 ## What I use:
 - Debian stable
