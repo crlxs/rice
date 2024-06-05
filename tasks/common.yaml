@@ -77,13 +77,13 @@
 #  failed_when: "'FAILED' in ohmyzsh_result.stderr"
 #
 #
-#- name: nvim stable download
-#  tags:
-#    - common
-#  get_url:
-#    url: "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
-#    dest: "{{ home }}/.local/bin/nvim.appimage"
-#    mode: '0755'
+- name: nvim stable download
+  tags:
+    - common
+  get_url:
+    url: "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
+    dest: "{{ home }}/.local/bin/nvim.appimage"
+    mode: '0755'
 
 
 - name: rename nvim.appimage to nvim
