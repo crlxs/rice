@@ -65,6 +65,18 @@
     shell: /bin/zsh
 
 
+- name: Download ohmyzsh install script
+  get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/install_ohmyzsh.sh
+
+
+- name: Run ohmyzsh install script
+  command: sh /tmp/install_ohmyzsh.sh
+  register: ohmyzsh_result
+  failed_when: "'FAILED' in ohmyzsh_result.stderr"
+
+
 - name: nvim stable download
   tags:
     - common
