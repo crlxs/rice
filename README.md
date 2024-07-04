@@ -7,6 +7,10 @@ You can either:
 - Execute the ansible playbook with: 
 > ansible-playbook -t TAGS setup.yaml --ask-become-pass --ask-vault-pass
 
+- This is what it currently looks like:
+
+![desktop](desktop.jpg)
+
 ## What I use:
 - Debian stable
 - Suckless.org software:
