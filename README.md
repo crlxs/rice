@@ -13,7 +13,7 @@ You can either:
 
 ## What I use:
 - Debian stable (12 as of now)
-- Suckless.org software:
+- ![Suckless.org](suckless.org) software:
   - dwm
   - dmenu
   - st
