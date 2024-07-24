@@ -12,7 +12,7 @@ You can either:
 ![desktop](desktop.jpg)
 
 ## What I use:
-- Debian stable (12 as of now)
+- Debian stable (Bookworm 12)
 - [Suckless.org](https://www.suckless.org) software:
   - dwm
   - dmenu
