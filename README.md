@@ -37,7 +37,7 @@ You can either:
 
 ### Basic
 
-MODKEY = WindowsKey
+MODKEY = Windows Key
 
 - **Spawn new terminal**: MODKEY + Shift + Enter
 - **Spawn new browser**: MODKEY + w
