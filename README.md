@@ -17,7 +17,7 @@ You can either:
   - dwm
   - dmenu
   - st
-- Neovim/lazy vim with FuzzyFinder and LSP(autocomplete) (work in progress)
+- Neovim/lazy vim with a few plugins like,FuzzyFinder, LSP(autocomplete) and others (work in progress)
 - A git bare repo to track my doftiles (github.com/crlxs/dotfiles)
 - Ansible: Environment deployment.
 - Ansible-vault: Encryption of SSH private key (./ssh/id_rsa) so it can safely be in this repo and reused.
