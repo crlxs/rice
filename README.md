@@ -9,7 +9,7 @@ You can either:
 
 - This is what it currently looks like:
 
-![desktop](desktop.jpg)
+![desktop](img/desktop.jpg)
 
 ## What I use:
 - Debian stable (Bookworm 12)
@@ -80,4 +80,4 @@ TERMMOD = Control + Shift
 
 Small diagram of the decision tree for the install process, this is not yet fully implemented but its the idea. Either through shell script with the different choices asked or by the use of tags with the ansible playbook.
 
-![Dotfiles diagram](dotfiles.jpg)
+![Dotfiles diagram](img/dotfiles.jpg)
