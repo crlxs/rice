@@ -28,7 +28,7 @@ You can either:
 ## To-dos
 - [ ] Install swallow patch for dwm
 - [ ] Transform playbook setup.yaml to role based playbook and tags usage.
-- [ ] Ansible handler to clone with ssh instead of https if gitssh task has been setup. With the current tasks (cloning with https and setting up git with ssh), I cant push changes to my dotfiles repos because it fails authentication. I just realized this can be done by simply changing the remote configured in ~/.dotfiles/config.
+- [ ] Ansible handler to clone with ssh instead of https if gitssh task has been setup. With the current tasks (cloning with https and setting up git with ssh), I cant push changes to my dotfiles repos because it fails authentication. I just realized this can be done by simply changing the remote configured in ~/.dotfiles/config to "url = git@github.com:crlxs/dotfiles.git" and push set-upstream.
 - [ ] zsh/nvim customization
 - [x] Use ansible-vault for git ssh setup to avoid the pain in the ass that is managing ssh keys. (COMPLETED June 3rd, 2024).
 - [x] Convert setup.sh into an ansible playbook (setup.yaml). (COMPLETED June 3rd, 2024).
