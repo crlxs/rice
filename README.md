@@ -40,12 +40,16 @@ You can either:
 MODKEY = Windows Key
 
 - **Spawn new terminal**: MODKEY + Shift + Enter
-- **Spawn new browser**: MODKEY + w
 - **Kill selected window**: MODKEY + Shift + c
 - **Open dmenu**: MODKEY + p
 - **Hide/Show bar**: MODKEY + b
 - **Exit dwm**: MODKEY + Shift + q
 - **Fullscreen selected window**: MODKEY + Shift + f
+
+### Utilities
+
+- **Screen capture**: MODKEY + s (Launches "scrot -s")
+- **Spawn new browser**: MODKEY + w (Launches "chromium --incognito")
 
 ### Layouts
 
@@ -75,6 +79,11 @@ TERMMOD = Control + Shift
 
 - **Scrollup**: Shift + Pgup
 - **Scrolldown**: Shift + PgDown
+
+### Multi-display
+
+- **Move between displays**: MODKEY + . or , (Left and right)
+- **Send window to display**: MODKEY + . or , (Left and right)
 
 ## Diagram
 
