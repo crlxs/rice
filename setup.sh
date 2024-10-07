@@ -5,7 +5,7 @@
 USER_HOME=$(eval echo ~${SUDO_USER:-$USER})
 
 dwm_dependencies="xorg xserver-xorg dbus-x11 build-essential libx11-dev libxft-dev libxinerama-dev"
-my_packages="curl ripgrep fd-find fzf unzip git zsh chromium compton feh xwallpaper fonts-noto-color-emoji nmap net-tools curl tcpdump"
+my_packages="curl ripgrep fd-find fzf unzip git zsh chromium compton feh xwallpaper fonts-noto-color-emoji nmap net-tools curl tcpdump fuse3" #fuse3 is an nvim dependency
 
 suckless_dirs=($USER_HOME/.local/src/dwm $USER_HOME/.local/src/dmenu $USER_HOME/.local/src/st)
 
