@@ -1,5 +1,5 @@
 # Rice
-This repo contains a bootstraping script/ansible-playbook that sets up my environment from scratch on a Debian machine, and clones my dotfiles repo.
+This repo contains a bootstraping shell script/ansible-playbook that clones my dotfiles repo and setups my environment from scratch.
 Also, trying to unclutter ~/ moving dotfiles to ~/.config when possible (https://wiki.archlinux.org/title/XDG_Base_Directory).
 
 You can either:
