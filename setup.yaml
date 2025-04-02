@@ -28,6 +28,7 @@
       - fonts-noto-color-emoji
       - net-tools
       - tcpdump
+      - xsel #clipboard
       - fuse3 #nvim dependency
     home: "{{ lookup('env', 'HOME') }}"
     homedirs:
