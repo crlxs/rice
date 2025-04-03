@@ -28,7 +28,7 @@
       - fonts-noto-color-emoji
       - net-tools
       - tcpdump
-      - nvim
+      - neovim
       - xsel #clipboard
       - fuse3 #nvim dependency
     home: "{{ lookup('env', 'HOME') }}"
