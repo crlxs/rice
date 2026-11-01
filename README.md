@@ -13,12 +13,13 @@ On a fresh machine, install Ansible and clone this repository:
 ```sh
 sudo apt update
 sudo apt install -y ansible-core git ca-certificates
-git clone https://github.com/crlxs/rice.git ~/rice
-cd ~/rice
+mkdir -p ~/.local/src ~/.local/share
+git clone https://github.com/crlxs/rice.git ~/.local/src/rice
+cd ~/.local/src/rice
 ansible-playbook -i localhost, setup.yaml --ask-become-pass
 ```
 
-If you already have `~/rice`, skip the clone. No Galaxy collections are required.
+If you already have `~/.local/src/rice`, skip the clone. No Galaxy collections are required.
 The default run installs both the shell environment and desktop. It does not
 restore the vaulted SSH key or grant inbound SSH access.
 
@@ -60,9 +61,9 @@ From a local text console, run:
 startx
 ```
 
-The dotfiles login profile exports `XINITRC=$HOME/.config/x11/xinitrc`, so plain
+The dotfiles Zsh bootstrap exports `XINITRC=$HOME/.config/x11/xinitrc`, so plain
 `startx` selects this session. If you have installed only the desktop tasks or
-have not loaded the login profile, use `startx "$HOME/.config/x11/xinitrc"`.
+have not loaded the shell environment, use `startx "$HOME/.config/x11/xinitrc"`.
 
 The session adds `~/.local/bin` to PATH and starts dwm, picom, a clock/status
 loop, and the bundled jaguar wallpaper. Picom uses the XRender backend, which
@@ -106,6 +107,45 @@ Neovim is pinned in `vars/main.yaml` and downloaded with upstream SHA256
 verification. Its tarball needs no FUSE. The playbook checks that it can start.
 Plugin managers may download plugins on first shell/editor startup.
 Package installation refreshes the apt cache but does not upgrade the whole OS.
+
+## Home directory layout and migration
+
+The default installation keeps configuration in `~/.config`, data in
+`~/.local/share`, persistent state in `~/.local/state`, and disposable caches in
+`~/.cache`. The installer checkout lives in `~/.local/src/rice`; bare dotfiles
+metadata lives in `~/.local/share/dotfiles`. Your home remains the dotfiles work
+tree. The small `~/.zshenv` bootstrap is the one required top-level shell file.
+The dotfiles README is stored at `~/.config/dotfiles/README.md`; ignore rules
+are stored at `~/.config/git/ignore`.
+
+Zsh loads XDG and tool environment settings before interactive or login startup.
+History is stored under `~/.local/state/zsh`; completion dumps under
+`~/.cache/zsh`. less and fallback Vim history also use the state directory.
+The repository's `ansible.cfg` keeps first-run temporary files out of
+`~/.ansible`, even before dotfiles have been installed. Run Ansible from the
+installer checkout as shown above.
+
+For an older installation, update the installer and dotfiles revisions first,
+then run the `common` tasks. The migration moves `~/.dotfiles` without changing
+its index or local Git configuration, relocates known histories and completion
+caches, and archives displaced files under
+`~/.local/state/rice/backups/<timestamp>/`. Conflicting histories are retained
+in backups; both old and new contents are preserved. Existing repository
+destinations are never overwritten. The legacy `~/rice` checkout moves only
+after all playbook tasks have finished; future commands use the new path.
+
+Only recognized managed startup links and redundant files are archived. Bash
+fallback files, credentials, unmanaged application directories, and current X
+authentication files are retained. A clean `~/dotfiles` duplicate is archived
+only if its current commit is already part of the canonical repository history.
+The original `~/jaguar.jpg` upload is archived only if it matches the installed
+wallpaper. Backups are private and can be restored after review.
+
+Close old shell sessions and log back in after migration so they stop using
+legacy history paths. New X authentication files use `$XDG_RUNTIME_DIR` when
+available and `~/.local/state/x11` otherwise. Inherited authentication paths
+are preserved for existing sessions. Root-level documentation and ignore files
+from this setup are migrated only when recognized; personal files are kept.
 
 ## Appearance
 
@@ -155,8 +195,8 @@ installation is the final integration test.
 
 | Repository | Local checkout | Owns |
 | --- | --- | --- |
-| [rice](https://github.com/crlxs/rice) | `~/rice` | Ansible, dependencies, font setup, X startup templates, jaguar wallpaper |
-| [dotfiles](https://github.com/crlxs/dotfiles) | `~/.dotfiles` (bare; home is its work tree) | Shell, Neovim, tmux, X session files and wallpaper |
+| [rice](https://github.com/crlxs/rice) | `~/.local/src/rice` | Ansible, dependencies, font setup, X startup templates, jaguar wallpaper |
+| [dotfiles](https://github.com/crlxs/dotfiles) | `~/.local/share/dotfiles` (bare; home is its work tree) | Shell, Neovim, tmux, X session files and wallpaper |
 | [st](https://github.com/crlxs/st) | `~/.local/src/st` | Terminal patches and appearance defaults |
 | [dwm](https://github.com/crlxs/dwm) | `~/.local/src/dwm` | Layouts, shortcuts, window appearance and opacity |
 | [dmenu](https://github.com/crlxs/dmenu) | `~/.local/src/dmenu` | Launcher patches and appearance defaults |
@@ -174,8 +214,8 @@ From the standard installation paths:
 git -C "$HOME/.local/src/st" push origin HEAD
 git -C "$HOME/.local/src/dwm" push origin HEAD
 git -C "$HOME/.local/src/dmenu" push origin HEAD
-git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" push origin HEAD
-git -C "$HOME/rice" push origin HEAD
+git --git-dir="$HOME/.local/share/dotfiles" --work-tree="$HOME" push origin HEAD
+git -C "$HOME/.local/src/rice" push origin HEAD
 ```
 
 Commit and push are separate steps. A new PC receives only commits published to

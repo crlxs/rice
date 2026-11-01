@@ -5,29 +5,43 @@
     state: present
   become: true
 
+- name: Relocate legacy bare dotfiles repository without changing its contents
+  ansible.builtin.script:
+    cmd: '{{ (playbook_dir ~ "/files/migrate_home.py") | quote }} {{ home | quote }} --repository-only'
+    executable: /usr/bin/python3
+  register: repository_migration
+  changed_when: "'CHANGED:' in repository_migration.stdout"
+
 - name: Clone dotfiles without overwriting or updating an existing repository
   ansible.builtin.git:
     repo: "{{ dotfiles_repo }}"
-    dest: "{{ home }}/.dotfiles"
+    dest: "{{ dotfiles_directory }}"
     bare: true
     update: false
 
 - name: Back up initial dotfile conflicts and check out configuration
   ansible.builtin.script:
-    cmd: '{{ (playbook_dir ~ "/files/checkout_dotfiles.py") | quote }} {{ home | quote }}'
+    cmd: '{{ (playbook_dir ~ "/files/checkout_dotfiles.py") | quote }} {{ home | quote }} {{ dotfiles_directory | quote }}'
     executable: /usr/bin/python3
   register: dotfiles_checkout
   changed_when: "'CHANGED' in dotfiles_checkout.stdout"
 
 - name: Hide untracked home files from dotfiles status
   ansible.builtin.command:
-    argv: [git, "--git-dir={{ home }}/.dotfiles", config, --local, status.showUntrackedFiles, 'no']
+    argv: [git, "--git-dir={{ dotfiles_directory }}", config, --local, status.showUntrackedFiles, 'no']
   changed_when: false
 
 - name: Configure authenticated pushes without changing HTTPS fetches
   ansible.builtin.command:
-    argv: [git, "--git-dir={{ home }}/.dotfiles", remote, set-url, --push, origin, "{{ dotfiles_push_url }}"]
+    argv: [git, "--git-dir={{ dotfiles_directory }}", remote, set-url, --push, origin, "{{ dotfiles_push_url }}"]
   changed_when: false
+
+- name: Migrate managed legacy files into data, state and cache directories
+  ansible.builtin.script:
+    cmd: '{{ (playbook_dir ~ "/files/migrate_home.py") | quote }} {{ home | quote }}'
+    executable: /usr/bin/python3
+  register: home_migration
+  changed_when: "'CHANGED:' in home_migration.stdout"
 
 - name: Download checksum-verified Neovim archive
   ansible.builtin.get_url:

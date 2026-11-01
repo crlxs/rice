@@ -24,7 +24,8 @@ class CheckoutTests(unittest.TestCase):
         (source / '.zprofile').symlink_to('.config/example')
         self.run_git('-C', str(source), 'add', '.')
         self.run_git('-C', str(source), '-c', 'user.name=Test', '-c', 'user.email=test@example.org', 'commit', '-m', 'fixture')
-        self.run_git('clone', '--bare', str(source), str(self.home / '.dotfiles'))
+        (self.home / '.local/share').mkdir(parents=True)
+        self.run_git('clone', '--bare', str(source), str(self.home / '.local/share/dotfiles'))
 
     def run_git(self, *args):
         subprocess.run(['git', *args], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)

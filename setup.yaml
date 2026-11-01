@@ -29,7 +29,7 @@
         path: "{{ home }}/{{ item }}"
         state: directory
         mode: '0755'
-      loop: [.config, .local/src, .local/share, .local/bin, .cache, .cache/zsh]
+      loop: [.config, .local/src, .local/share, .local/state, .local/bin, .cache, .cache/zsh]
       tags: [always]
   tasks:
     - name: Install desktop and editor fonts
@@ -44,3 +44,12 @@
     - name: Restore optional vaulted GitHub identity
       ansible.builtin.import_tasks: tasks/gitssh.yaml
       tags: [never, gitssh]
+    - name: Relocate the legacy installer checkout after all installation tasks
+      ansible.builtin.script:
+        cmd: '{{ (playbook_dir ~ "/files/migrate_home.py") | quote }} {{ home | quote }} --installer-only'
+        executable: /usr/bin/python3
+      args:
+        chdir: "{{ home }}"
+      register: installer_migration
+      changed_when: "'CHANGED:' in installer_migration.stdout"
+      tags: [always]

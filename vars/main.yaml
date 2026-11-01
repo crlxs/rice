@@ -3,6 +3,7 @@ home: "{{ ansible_facts.user_dir }}"
 dotfiles_repo: https://github.com/crlxs/dotfiles.git
 # Existing clones are preserved, including local edits. Updates are manual.
 dotfiles_push_url: git@github.com:crlxs/dotfiles.git
+dotfiles_directory: "{{ home }}/.local/share/dotfiles"
 # SHA256 values from the v0.11.5 GitHub release assets; update with the version.
 nvim_version: v0.11.5
 nvim_checksums:

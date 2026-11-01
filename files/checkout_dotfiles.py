@@ -7,9 +7,9 @@ import subprocess
 import sys
 
 
-def checkout(home):
+def checkout(home, repo=None):
     home = Path(home).resolve()
-    repo = home / '.dotfiles'
+    repo = Path(repo).resolve() if repo else home / '.local/share/dotfiles'
     prefix = ['git', f'--git-dir={repo}', f'--work-tree={home}']
 
     def git(*args):
@@ -20,7 +20,9 @@ def checkout(home):
     conflicts = []
     for raw in filter(None, paths):
         relative = Path(os.fsdecode(raw))
-        if relative.is_absolute() or '..' in relative.parts or relative.parts[0] == '.dotfiles':
+        if (relative.is_absolute() or '..' in relative.parts
+                or relative.parts[0] == '.dotfiles'
+                or (home / relative == repo or repo in (home / relative).parents)):
             raise RuntimeError(f'Unsafe dotfile path: {relative}')
         destination = home / relative
         # Do not follow directory symlinks out of the home tree during checkout.
@@ -48,4 +50,4 @@ def checkout(home):
 
 
 if __name__ == '__main__':
-    checkout(sys.argv[1])
+    checkout(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
