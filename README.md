@@ -108,8 +108,13 @@ The corrected installer verifies that all three binaries exist and are executabl
 in your `~/.local/bin`.
 
 Neovim is pinned in `vars/main.yaml` and downloaded with upstream SHA256
-verification. Its tarball needs no FUSE. The playbook checks that it can start.
-Plugin managers may download plugins on first shell/editor startup.
+verification. Its tarball needs no FUSE. The playbook checks out `init.lua`,
+restores plugins to the dotfiles lockfile, and verifies that the Kanagawa theme
+and Neo-tree load. Neovim plugins therefore need network access during setup;
+Zsh plugins may still download when the shell first starts.
+Older dotfiles exported `VIMINIT`, which made Neovim skip `init.lua`. If `:Lazy`
+is unavailable, clear that variable for the current session with `unset VIMINIT`
+and update the dotfiles checkout before starting another shell.
 Package installation refreshes the apt cache but does not upgrade the whole OS.
 
 ## Home directory layout and migration

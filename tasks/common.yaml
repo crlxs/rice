@@ -77,6 +77,47 @@
   changed_when: false
   when: not ansible_check_mode
 
+- name: Verify Neovim dotfiles were checked out
+  ansible.builtin.stat:
+    path: "{{ home }}/.config/nvim/init.lua"
+  register: nvim_init
+
+- name: Require Neovim configuration
+  ansible.builtin.assert:
+    that: nvim_init.stat.isreg | default(false)
+    fail_msg: "Neovim configuration is missing from {{ home }}/.config/nvim/init.lua. Check the dotfiles checkout."
+  when: not ansible_check_mode
+
+- name: Restore Neovim plugins from the dotfiles lockfile
+  ansible.builtin.command:
+    argv: [timeout, '600', "{{ home }}/.local/bin/nvim", --headless, '+Lazy! restore', +qa]
+  environment:
+    NVIM_APPNAME: nvim
+    VIMINIT: ''
+    XDG_CONFIG_HOME: "{{ home }}/.config"
+    XDG_DATA_HOME: "{{ home }}/.local/share"
+    XDG_STATE_HOME: "{{ home }}/.local/state"
+    XDG_CACHE_HOME: "{{ home }}/.cache"
+  changed_when: true
+  when: not ansible_check_mode
+
+- name: Verify Neovim theme and file browser load
+  ansible.builtin.command:
+    argv:
+      - "{{ home }}/.local/bin/nvim"
+      - --headless
+      - "+lua local theme = vim.g.colors_name or 'none'; local neotree = vim.fn.exists(':Neotree'); if theme ~= 'kanagawa' or neotree ~= 2 then vim.api.nvim_err_writeln('Neovim config incomplete: theme=' .. theme .. ', Neotree=' .. neotree); vim.cmd('cquit 1') end"
+      - +qa
+  environment:
+    NVIM_APPNAME: nvim
+    VIMINIT: ''
+    XDG_CONFIG_HOME: "{{ home }}/.config"
+    XDG_DATA_HOME: "{{ home }}/.local/share"
+    XDG_STATE_HOME: "{{ home }}/.local/state"
+    XDG_CACHE_HOME: "{{ home }}/.cache"
+  changed_when: false
+  when: not ansible_check_mode
+
 - name: Set the desktop user's login shell
   ansible.builtin.user:
     name: "{{ ansible_facts.user_id }}"
