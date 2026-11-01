@@ -32,12 +32,13 @@
       loop: [.config, .local/src, .local/share, .local/state, .local/bin, .cache, .cache/zsh]
       tags: [always]
   tasks:
-    - name: Install desktop and editor fonts
-      ansible.builtin.import_tasks: tasks/fonts.yaml
-      tags: [common, suckless, fonts]
+    # Dotfiles and the font task both install the fontconfig fallback file.
     - name: Install shell environment and dotfiles
       ansible.builtin.import_tasks: tasks/common.yaml
       tags: [common]
+    - name: Install desktop and editor fonts
+      ansible.builtin.import_tasks: tasks/fonts.yaml
+      tags: [common, suckless, fonts]
     - name: Install desktop
       ansible.builtin.import_tasks: tasks/suckless.yaml
       tags: [suckless]
