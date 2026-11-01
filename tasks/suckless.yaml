@@ -1,42 +1,79 @@
-
-#- name: apt update && upgrade
-#  tags:
-#    - suckless
-#  become: true
-#  apt: 
-#    upgrade: yes
-#    update_cache: yes
-#    cache_valid_time: 3600 # One hour
-
-
-- name: Install suckless dependencies
-  tags:
-    - suckless
-  become: true
-  apt:
-    name: "{{ suckless_dep }}"
+---
+- name: Install desktop and build dependencies
+  ansible.builtin.apt:
+    name: "{{ desktop_packages }}"
     state: present
+  become: true
 
-
-- name: Clone my forks of dwm, dmenu and st
-  tags:
-    - suckless
-  git:
-    repo: 'https://github.com/crlxs/{{ item }}'
+- name: Clone suckless forks without discarding local edits or updating existing clones
+  ansible.builtin.git:
+    repo: "https://github.com/crlxs/{{ item }}.git"
     dest: "{{ home }}/.local/src/{{ item }}"
-  loop:
-    - dwm
-    - dmenu
-    - st
+    update: false
+  loop: "{{ suckless_tools }}"
 
-
-- name: Make install dwm, dmenu and st
-  tags:
-    - suckless
-  make:
+- name: Build suckless tools as the desktop user
+  ansible.builtin.command:
+    argv: [make]
     chdir: "{{ home }}/.local/src/{{ item }}"
-    target: install
-  loop:
-    - dwm
-    - dmenu
-    - st
+  register: suckless_build
+  changed_when: "'Nothing to be done' not in suckless_build.stdout"
+  loop: "{{ suckless_tools }}"
+
+- name: Create user installation directories
+  ansible.builtin.file:
+    path: "{{ home }}/.local/{{ item }}"
+    state: directory
+    mode: '0755'
+  loop: [bin, share/terminfo]
+
+- name: Install suckless tools for the desktop user
+  ansible.builtin.command:
+    argv: [make, install, "PREFIX={{ home }}/.local"]
+    chdir: "{{ home }}/.local/src/{{ item }}"
+  environment:
+    TERMINFO: "{{ home }}/.local/share/terminfo"
+  loop: "{{ suckless_tools }}"
+  # Upstream install targets copy binaries and terminfo on each run.
+  changed_when: true
+
+- name: Inspect installed suckless binaries
+  ansible.builtin.stat:
+    path: "{{ home }}/.local/bin/{{ item }}"
+  loop: "{{ suckless_tools }}"
+  register: suckless_binaries
+  when: not ansible_check_mode
+
+- name: Require executable suckless binaries in the user installation
+  ansible.builtin.assert:
+    that:
+      - item.stat.exists
+      - item.stat.isreg | default(false)
+      - item.stat.executable | default(false)
+    fail_msg: "Installation did not produce {{ home }}/.local/bin/{{ item.item }}. Check the fork's install target."
+  loop: "{{ suckless_binaries.results }}"
+  loop_control:
+    label: "{{ item.item }}"
+  when: not ansible_check_mode
+
+- name: Ensure X configuration directory exists for desktop-only installation
+  ansible.builtin.file:
+    path: "{{ home }}/.config/x11"
+    state: directory
+    mode: '0755'
+
+- name: Install the default jaguar wallpaper
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/files/wallpapers/jaguar.jpg"
+    dest: "{{ home }}/.local/share/wallpaper"
+    mode: '0644'
+    follow: false
+    backup: true
+
+- name: Install portable X session configuration
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/files/{{ item }}"
+    dest: "{{ home }}/.config/x11/{{ item }}"
+    mode: '0755'
+    backup: true
+  loop: [xinitrc, xprofile]

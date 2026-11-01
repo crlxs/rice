@@ -1,0 +1,6 @@
+#!/bin/sh
+xset r rate 200 50
+# Device IDs vary between machines; configure mouse acceleration per device locally.
+if [ -f "$HOME/.local/share/wallpaper" ]; then
+    xwallpaper --zoom "$HOME/.local/share/wallpaper"
+fi

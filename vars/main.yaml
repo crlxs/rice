@@ -1,0 +1,55 @@
+---
+home: "{{ ansible_facts.user_dir }}"
+dotfiles_repo: https://github.com/crlxs/dotfiles.git
+# Existing clones are preserved, including local edits. Updates are manual.
+dotfiles_push_url: git@github.com:crlxs/dotfiles.git
+# SHA256 values from the v0.11.5 GitHub release assets; update with the version.
+nvim_version: v0.11.5
+nvim_checksums:
+  x86_64: b2f91117be5b5ea39edd7297156dc2a4a8df4add6c95a90809a8df19e7ab6f52
+  arm64: ea4f9a31b11cc1477ff014aebb7b207684e7280f94ffa97abdab6cacd9b98519
+nvim_arch: "{{ {'x86_64': 'x86_64', 'aarch64': 'arm64'}[ansible_facts.architecture] }}"
+nvim_asset: "nvim-linux-{{ nvim_arch }}.tar.gz"
+nvim_release_url: "https://github.com/neovim/neovim/releases/download/{{ nvim_version }}"
+nvim_directory: "{{ home }}/.local/share/nvim-{{ nvim_version }}-{{ nvim_arch }}"
+suckless_tools: [dwm, dmenu, st]
+# Symbols supplement the terminal's normal font without changing its metrics.
+nerd_fonts_version: v3.4.0
+nerd_fonts_asset: NerdFontsSymbolsOnly.tar.xz
+nerd_fonts_release_url: "https://github.com/ryanoasis/nerd-fonts/releases/download/{{ nerd_fonts_version }}"
+font_packages: [fontconfig, fonts-noto-mono, fonts-noto-color-emoji, xz-utils]
+core_packages:
+  - curl
+  - ripgrep
+  - fd-find
+  - unzip
+  - zsh
+  - fzf
+  - net-tools
+  - tcpdump
+  - xsel
+  - build-essential
+  - tmux
+desktop_packages:
+  - pkg-config
+  - xorg
+  - xserver-xorg
+  - xinit
+  - xinput
+  - dbus-x11
+  - build-essential
+  - libx11-dev
+  - libxft-dev
+  - libxinerama-dev
+  - libxrender-dev
+  - libx11-xcb-dev
+  - libxcb-res0-dev
+  - libharfbuzz-dev
+  - libgd-dev
+  - libimlib2-dev
+  - feh
+  - xwallpaper
+  - picom
+  - chromium
+  - scrot
+  - gimp

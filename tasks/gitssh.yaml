@@ -1,44 +1,21 @@
-#- name: apt update && upgrade
-#  tags:
-#    - common
-#  become: true
-#  apt: 
-#    upgrade: yes
-#    update_cache: yes
-#    cache_valid_time: 3600 # One hour
-
-
-- name: Ensure ~/.ssh exists
-  tags:
-    - gitssh
-  file:
-    dest: "{{ home }}/.ssh"
+---
+- name: Create private SSH directory
+  ansible.builtin.file:
+    path: "{{ home }}/.ssh"
     state: directory
+    mode: '0700'
 
+- name: Restore vaulted private key with backup of any previous identity
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/ssh/id_rsa"
+    dest: "{{ home }}/.ssh/id_rsa"
+    mode: '0600'
+    backup: true
+  no_log: true
 
-- name: Install ssh key
-  tags:
-    - gitssh
-  copy:
-    src: "{{ source_key }}"
-    dest: "{{ dest_key }}"
-    mode: 0600
-
-
-- name: Install ssh public key
-  tags:
-    - gitssh
-  copy:
-    src: "{{ source_key }}.pub"
-    dest: "{{ dest_key }}.pub"
-
-
-- name: Set authorized key took from file # This authorizes inbound ssh from hosts with this same key pair
-  tags:
-    - gitssh
-  authorized_key:
-    user: "{{ lookup('env', 'USER' ) }}"
-    state: present
-    key: "{{ lookup('file', item) }}"
-  with_fileglob:
-    - "{{ home }}/.ssh/*.pub"
+- name: Restore matching public key
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/ssh/id_rsa.pub"
+    dest: "{{ home }}/.ssh/id_rsa.pub"
+    mode: '0644'
+    backup: true

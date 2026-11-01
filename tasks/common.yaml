@@ -1,98 +1,70 @@
-#- name: apt update && upgrade
-#  tags:
-#    - common
-#  become: true
-#  apt: 
-#    upgrade: yes
-#    update_cache: yes
-#    cache_valid_time: 3600 # One hour
-
-
+---
 - name: Install core packages
-  tags:
-    - common
-  become: true
-  apt:
-    name: "{{ core }}"
+  ansible.builtin.apt:
+    name: "{{ core_packages }}"
     state: present
+  become: true
 
-
-- name: Create ~/ directories for dotfiles
-  tags:
-    - common
-  file:
-    path: "{{ item }}"
-    state: directory
-  loop: "{{ homedirs }}"
-
-
-- name: Clone dotfiles bare repo
-  tags:
-    - common
-  git:
-    repo: 'https://github.com/crlxs/dotfiles'
+- name: Clone dotfiles without overwriting or updating an existing repository
+  ansible.builtin.git:
+    repo: "{{ dotfiles_repo }}"
     dest: "{{ home }}/.dotfiles"
     bare: true
+    update: false
 
+- name: Back up initial dotfile conflicts and check out configuration
+  ansible.builtin.script:
+    cmd: '{{ (playbook_dir ~ "/files/checkout_dotfiles.py") | quote }} {{ home | quote }}'
+    executable: /usr/bin/python3
+  register: dotfiles_checkout
+  changed_when: "'CHANGED' in dotfiles_checkout.stdout"
 
-- name: Checkout content into ~/ # Haven't managed to do it with git module.
-  tags:
-    - common
-  shell:
-    cmd: git --git-dir=$HOME/.dotfiles --work-tree=$HOME checkout
+- name: Hide untracked home files from dotfiles status
+  ansible.builtin.command:
+    argv: [git, "--git-dir={{ home }}/.dotfiles", config, --local, status.showUntrackedFiles, 'no']
+  changed_when: false
 
+- name: Configure authenticated pushes without changing HTTPS fetches
+  ansible.builtin.command:
+    argv: [git, "--git-dir={{ home }}/.dotfiles", remote, set-url, --push, origin, "{{ dotfiles_push_url }}"]
+  changed_when: false
 
-- name: Define dotfiles alias for current shell
-  tags:
-    - common
-  shell:
-    cmd: alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles --work-tee=$HOME'
+- name: Download checksum-verified Neovim archive
+  ansible.builtin.get_url:
+    url: "{{ nvim_release_url }}/{{ nvim_asset }}"
+    dest: "{{ home }}/.cache/{{ nvim_version }}-{{ nvim_asset }}"
+    checksum: "sha256:{{ nvim_checksums[nvim_arch] }}"
+    mode: '0644'
 
-
-- name: Set showUntrackedFiles flag to no locally
-  tags:
-    - common
-  shell:
-    cmd: git --git-dir=$HOME/.dotfiles --work-tree=$HOME config --local status.showUntrackedFiles no
-
-
-- name: Change default shell to zsh
-  tags:
-    - common
-  become: true
-  user:
-    name: "{{ ansible_user_id }}"
-    shell: /bin/zsh
-
-
-#- name: Download ohmyzsh install script
-#  get_url:
-#    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-#    dest: /tmp/install_ohmyzsh.sh
-#
-#
-#- name: Run ohmyzsh install script
-#  command: sh /tmp/install_ohmyzsh.sh
-#  register: ohmyzsh_result
-#  failed_when: "'FAILED' in ohmyzsh_result.stderr"
-#
-#
-#
-- name: nvim stable download
-  tags:
-    - common
-  get_url:
-    url: "https://github.com/neovim/neovim/releases/download/stable/nvim.appimage"
-    dest: "{{ home }}/.local/bin/nvim.appimage"
+- name: Create versioned Neovim directory
+  ansible.builtin.file:
+    path: "{{ nvim_directory }}"
+    state: directory
     mode: '0755'
 
-- name: rename nvim.appimage to nvim
-  tags:
-    - common
-  shell: mv $HOME/.local/bin/nvim.appimage $HOME/.local/bin/nvim
+- name: Extract Neovim without requiring FUSE
+  ansible.builtin.unarchive:
+    src: "{{ home }}/.cache/{{ nvim_version }}-{{ nvim_asset }}"
+    dest: "{{ nvim_directory }}"
+    remote_src: true
+    extra_opts: [--strip-components=1]
+    creates: "{{ nvim_directory }}/bin/nvim"
 
+- name: Link Neovim into the user path
+  ansible.builtin.file:
+    src: "{{ nvim_directory }}/bin/nvim"
+    dest: "{{ home }}/.local/bin/nvim"
+    state: link
+    force: true
 
-#- name: clean-up ~/
-#  tags:
-#    - common
-# ADD DEBUG MESSAGE TO REMIND DELETION OF OLD DOTFILES IN ~/
+- name: Verify Neovim can start
+  ansible.builtin.command:
+    argv: ["{{ home }}/.local/bin/nvim", --version]
+  changed_when: false
+  when: not ansible_check_mode
+
+- name: Set the desktop user's login shell
+  ansible.builtin.user:
+    name: "{{ ansible_facts.user_id }}"
+    shell: /bin/zsh
+  become: true

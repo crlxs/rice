@@ -1,0 +1,55 @@
+---
+- name: Install monospace and color emoji fonts
+  ansible.builtin.apt:
+    name: "{{ font_packages }}"
+    state: present
+  become: true
+
+- name: Create user font directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - "{{ home }}/.config/fontconfig/conf.d"
+    - "{{ home }}/.local/share/fonts/nerd-symbols-{{ nerd_fonts_version }}"
+
+- name: Configure terminal symbol and emoji fallbacks
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/files/fontconfig-fallbacks.conf"
+    dest: "{{ home }}/.config/fontconfig/conf.d/60-rice-fallbacks.conf"
+    mode: '0644'
+    backup: true
+  register: font_fallbacks
+
+- name: Download checksum-verified Nerd Font symbols
+  ansible.builtin.get_url:
+    url: "{{ nerd_fonts_release_url }}/{{ nerd_fonts_asset }}"
+    dest: "{{ home }}/.cache/{{ nerd_fonts_version }}-{{ nerd_fonts_asset }}"
+    checksum: "sha256:{{ nerd_fonts_release_url }}/SHA-256.txt"
+    mode: '0644'
+
+- name: Install Nerd Font symbols for Neovim icons
+  ansible.builtin.unarchive:
+    src: "{{ home }}/.cache/{{ nerd_fonts_version }}-{{ nerd_fonts_asset }}"
+    dest: "{{ home }}/.local/share/fonts/nerd-symbols-{{ nerd_fonts_version }}"
+    remote_src: true
+    creates: "{{ home }}/.local/share/fonts/nerd-symbols-{{ nerd_fonts_version }}/SymbolsNerdFontMono-Regular.ttf"
+  register: nerd_fonts_install
+
+- name: Refresh the user font cache
+  ansible.builtin.command:
+    argv: [fc-cache, -f, "{{ home }}/.local/share/fonts"]
+  when: font_fallbacks.changed or nerd_fonts_install.changed
+  changed_when: true
+
+- name: Verify icon and emoji font fallback
+  ansible.builtin.command:
+    argv: [fc-match, -f, '%{family}', "Noto Sans Mono:charset={{ item.charset }}"]
+  loop:
+    - {charset: f07b, family: 'Symbols Nerd Font Mono'}
+    - {charset: 1f600, family: 'Noto Color Emoji'}
+  register: font_match
+  changed_when: false
+  failed_when: item.family not in font_match.stdout
+  when: not ansible_check_mode

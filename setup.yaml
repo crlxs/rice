@@ -1,48 +1,46 @@
-# Ansible playbook to install my custom Linux Desktop environment + dotfiles.
-
-# Comment the includes at the bottom to choose what to install.
-# Don't forget to delete the old files in ~ after running.
-
-- hosts: localhost
-  vars:
-    suckless_dep: # Packages required to build dwm/dmenu/st and packages that I will only use with the graphical environment (feh, chromium, etc).
-      - xorg
-      - xserver-xorg
-      - dbus-x11
-      - build-essential
-      - libx11-dev
-      - libxft-dev
-      - libxinerama-dev
-      - feh
-      - xwallpaper
-      - compton
-      - gimp
-    core: # Packages common to all environments, regardless if they are graphical or not (zsh, git, neovim dependencies [ripgrep, fd-find], etc).
-      - curl
-      - ripgrep
-      - fd-find
-      - unzip
-      - git
-      - zsh
-      - fzf #Fuzzy finder for shell
-      - fonts-noto-color-emoji
-      - net-tools
-      - tcpdump
-      - xsel #clipboard
-      - fuse3 #nvim dependency
-    home: "{{ lookup('env', 'HOME') }}"
-    homedirs:
-      - "{{ home }}/.dotfiles"
-      - "{{ home }}/.config"
-      - "{{ home }}/.local/src"
-      - "{{ home }}/.local/share"
-      - "{{ home }}/.local/bin"
-      - "{{ home }}/.cache"
-      - "{{ home }}/.cache/zsh"
-    source_key: "./ssh/id_rsa"
-    dest_key: "{{ home }}/.ssh/id_rsa"
-  tasks: # Tasks per setup options, split through tags.
-    - include: tasks/common.yaml
-    - include: tasks/gitssh.yaml
-    - include: tasks/suckless.yaml
-# Includes seems way cleaner to manage instead of blocks of tasks.
+---
+- name: Install the rice desktop for the invoking user
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  become: false
+  vars_files:
+    - vars/main.yaml
+  pre_tasks:
+    - name: Require a supported OS and an unprivileged invocation
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.distribution == 'Debian'
+          - ansible_facts.distribution_major_version | int >= 12
+          - ansible_facts.user_uid != 0
+          - ansible_facts.architecture in ['x86_64', 'aarch64']
+        fail_msg: Run as your desktop user (without sudo) on Debian 12 or newer, on x86_64 or ARM64.
+      tags: [always]
+    - name: Install shared prerequisites
+      ansible.builtin.apt:
+        name: [git, ca-certificates, python3]
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+      become: true
+      tags: [always]
+    - name: Create user directories
+      ansible.builtin.file:
+        path: "{{ home }}/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop: [.config, .local/src, .local/share, .local/bin, .cache, .cache/zsh]
+      tags: [always]
+  tasks:
+    - name: Install desktop and editor fonts
+      ansible.builtin.import_tasks: tasks/fonts.yaml
+      tags: [common, suckless, fonts]
+    - name: Install shell environment and dotfiles
+      ansible.builtin.import_tasks: tasks/common.yaml
+      tags: [common]
+    - name: Install desktop
+      ansible.builtin.import_tasks: tasks/suckless.yaml
+      tags: [suckless]
+    - name: Restore optional vaulted GitHub identity
+      ansible.builtin.import_tasks: tasks/gitssh.yaml
+      tags: [never, gitssh]
