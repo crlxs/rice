@@ -131,8 +131,15 @@ its index or local Git configuration, relocates known histories and completion
 caches, and archives displaced files under
 `~/.local/state/rice/backups/<timestamp>/`. Conflicting histories are retained
 in backups; both old and new contents are preserved. Existing repository
-destinations are never overwritten. The legacy `~/rice` checkout moves only
-after all playbook tasks have finished; future commands use the new path.
+destinations are never overwritten. Ansible never moves its own working
+directory. After running from a legacy `~/rice` checkout, relocate it as a
+separate command, then use the new path:
+
+```sh
+cd "$HOME"
+python3 "$HOME/rice/files/migrate_home.py" "$HOME" --installer-only
+cd "$HOME/.local/src/rice"
+```
 
 Only recognized managed startup links and redundant files are archived. Bash
 fallback files, credentials, unmanaged application directories, and current X

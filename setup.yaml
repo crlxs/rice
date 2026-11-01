@@ -44,12 +44,11 @@
     - name: Restore optional vaulted GitHub identity
       ansible.builtin.import_tasks: tasks/gitssh.yaml
       tags: [never, gitssh]
-    - name: Relocate the legacy installer checkout after all installation tasks
-      ansible.builtin.script:
-        cmd: '{{ (playbook_dir ~ "/files/migrate_home.py") | quote }} {{ home | quote }} --installer-only'
-        executable: /usr/bin/python3
-      args:
-        chdir: "{{ home }}"
-      register: installer_migration
-      changed_when: "'CHANGED:' in installer_migration.stdout"
+    - name: Explain standalone migration of a legacy installer checkout
+      ansible.builtin.debug:
+        msg: >-
+          After this playbook exits, relocate the installer from a separate home-directory shell:
+          cd "$HOME" && python3 "$HOME/rice/files/migrate_home.py" "$HOME" --installer-only.
+          Future commands use ~/.local/src/rice. The running playbook never moves its own working directory.
+      when: playbook_dir == home ~ '/rice'
       tags: [always]
