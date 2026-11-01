@@ -8,7 +8,8 @@ A working internet connection and sudo access are required.
 
 ## Install
 
-On a fresh machine, install Ansible and clone this repository:
+On a fresh machine, install Ansible and clone this repository over HTTPS so
+the installer is available before any SSH key is restored:
 
 ```sh
 sudo apt update
@@ -19,9 +20,17 @@ cd ~/.local/src/rice
 ansible-playbook -i localhost, setup.yaml --ask-become-pass
 ```
 
+**The default first run does not set up an SSH key.** To restore the vaulted
+key during the first run, replace the final `ansible-playbook` command above
+with this one and enter the vault password when prompted:
+
+```sh
+ansible-playbook -i localhost, setup.yaml --tags common,suckless,gitssh --ask-become-pass --ask-vault-pass
+```
+
 If you already have `~/.local/src/rice`, skip the clone. No Galaxy collections are required.
-The default run installs both the shell environment and desktop. It does not
-restore the vaulted SSH key or grant inbound SSH access.
+The default run installs both the shell environment and desktop. Neither run
+grants inbound SSH access.
 
 For shell and dotfiles only:
 
@@ -36,16 +45,11 @@ ansible-playbook -i localhost, setup.yaml --tags suckless --ask-become-pass
 ```
 
 Optionally restore the repository's vaulted SSH identity (backing up any
-existing key); supply its existing vault password:
+existing key); supply its existing vault password. This also configures SSH
+pushes for the rice repository while keeping its HTTPS fetch URL:
 
 ```sh
 ansible-playbook -i localhost, setup.yaml --tags gitssh --ask-become-pass --ask-vault-pass
-```
-
-To install everything including that identity in one run:
-
-```sh
-ansible-playbook -i localhost, setup.yaml --tags common,suckless,gitssh --ask-become-pass --ask-vault-pass
 ```
 
 SSH pushes require that the public key is authorized on your GitHub account.

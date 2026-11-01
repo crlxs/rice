@@ -19,3 +19,14 @@
     dest: "{{ home }}/.ssh/id_rsa.pub"
     mode: '0644'
     backup: true
+
+- name: Read rice repository push URL
+  ansible.builtin.command:
+    argv: [git, -C, "{{ playbook_dir }}", remote, get-url, --push, origin]
+  register: rice_push_url
+  changed_when: false
+
+- name: Configure rice repository SSH pushes
+  ansible.builtin.command:
+    argv: [git, -C, "{{ playbook_dir }}", remote, set-url, --push, origin, 'git@github.com:crlxs/rice.git']
+  when: rice_push_url.stdout != 'git@github.com:crlxs/rice.git'
